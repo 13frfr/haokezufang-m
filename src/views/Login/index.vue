@@ -20,9 +20,7 @@
         :rules="[{ required: true, message: '请输入密码' }]"
       />
       <div style="margin: 16px">
-        <van-button block type="info" native-type="submit" @click="loginIn"
-          >登录</van-button
-        >
+        <van-button block type="info" native-type="submit">登录</van-button>
       </div>
     </van-form>
     <div class="end">还没有账号，去注册~</div>
@@ -43,12 +41,36 @@ export default {
       this.$router.back()
     },
     async login () {
-      const res = await login(this.username, this.password)
-      console.log(res)
-    },
-    loginIn () {
-      this.$router.push('/profile')
+      this.$toast.loading({
+        message: '加载中...',
+        // loading 禁止点击页面 这里是不是少了一个没讲你试试
+        duration: 0,
+        forbidClick: true
+      })
+      try {
+        const res = await login(this.username, this.password)
+        // 存储token
+        this.$store.commit('setUser', res.data.body)
+        console.log(res)
+        // 路由跳转
+        this.$router.push('./profile')
+        // 提示成功
+        this.$toast.success('登录成功')
+      } catch (err) {
+        // 提示失败
+        // 拿到状态码
+        const status = err.response.status
+        // 默认失败消息
+        let message = '登录错误'
+        if (status === 400) {
+          message = err.response.data.message
+        }
+        this.$toast.fail(message)
+      }
     }
+    // loginIn () {
+    //   this.$router.push('/profile')
+    // }
   }
 }
 </script>
