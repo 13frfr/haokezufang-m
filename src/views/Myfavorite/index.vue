@@ -7,7 +7,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMyFavorite } from '@/api/user'
+import { getMyFavoriteInfo } from '@/api/user'
 import MyHouse from '@/views/Myfavorite/component/MyHouse.vue'
 export default {
   data () {
@@ -17,15 +17,15 @@ export default {
   },
   created () {
     if (this.user) {
-      this.getMyFavorite()
+      this.getMyFavoriteInfo()
     }
   },
   methods: {
     goMy () {
       this.$router.back()
     },
-    async getMyFavorite () {
-      const { data } = await getMyFavorite()
+    async getMyFavoriteInfo () {
+      const { data } = await getMyFavoriteInfo()
       // console.log(data.body)
       this.houseList = data.body
     }

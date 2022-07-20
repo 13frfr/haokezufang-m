@@ -28,11 +28,8 @@ export const login = (username, password) => {
 //   })
 // }
 
-export const getMyFavorite = () => {
+export const getMyFavoriteInfo = () => {
   return request({
     url: '/user/favorites'
-    // headers: {
-    //   authorization: store.state.user.token
-    // }
   })
 }

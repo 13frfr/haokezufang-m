@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     houseList (id) {
-      this.$router.push('/houseList', id)
+      this.$router.push(`/HouseInfo/${id}`)
     }
   }
 }
